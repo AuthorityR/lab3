@@ -1,0 +1,37 @@
+# Дано
+capital = 150000  # капітал, тис. доларів
+risk_free_rate = 0.05  # ставка для державних цінних паперів (5%)
+risky_rate = 0.20  # ставка для акцій корпорацій (20%)
+prob_success = 0.7  # ймовірність одержання прибутку для акцій
+prob_failure = 0.3  # ймовірність невдачі (отримання тільки номіналу)
+
+# Функція корисності
+def utility(x):
+    return 0.15 * x**2
+
+# Розрахунок очікуваного прибутку
+# Вкладення в державні цінні папери (прибуток фіксований)
+risk_free_return = capital * (1 + risk_free_rate)
+risk_free_utility = utility(risk_free_return)
+
+# Вкладення в акції (ризиковий варіант)
+risky_success_return = capital * (1 + risky_rate)
+risky_failure_return = capital  # тільки номінал
+
+# Очікуваний прибуток для ризикових акцій
+expected_risky_return = (risky_success_return * prob_success) + (risky_failure_return * prob_failure)
+risky_utility = (utility(risky_success_return) * prob_success) + (utility(risky_failure_return) * prob_failure)
+
+# Премія за ризик
+risk_premium = risk_free_utility - risky_utility
+
+# Вибір оптимального варіанту
+optimal_choice = "державні цінні папери" if risk_free_utility > risky_utility else "акції корпорацій"
+
+# Виведення результатів
+print("Очікуваний прибуток для державних цінних паперів:", risk_free_return)
+print("Корисність для державних цінних паперів:", risk_free_utility)
+print("Очікуваний прибуток для акцій:", expected_risky_return)
+print("Корисність для акцій:", risky_utility)
+print("Премія за ризик:", risk_premium)
+print("Оптимальний вибір:", optimal_choice)
